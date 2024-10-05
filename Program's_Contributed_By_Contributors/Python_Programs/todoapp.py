@@ -36,11 +36,15 @@ class TodoListApp(QMainWindow):
         self.update_task_list()
 
     def add_task(self):
-        task = self.task_input.text()
-        if task:
-            self.tasks.append(task)
-            self.task_input.clear()
-            self.update_task_list()
+    task = self.task_input.text()
+    if task and task not in self.tasks:  # Prevent duplicates while adding task
+        self.tasks.append(task)
+        self.task_input.clear()
+        self.update_task_list()
+    elif task in self.tasks:
+        self.label.setText("Task already exists!")  # Inform the user if duplicate is getting added
+    else:
+        self.label.setText("Enter a valid task!")  # Inform the user for an empty input
 
     def remove_task(self):
         selected_index = self.task_list.currentIndex()
